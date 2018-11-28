@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { logout } from '../../Login/modules/auth'
 
 class Navbar extends React.Component{
+    constructor(props){
+        super(props)
+    }
     logout = () =>{
         confirmAlert({
             title: 'Logout Sekarang',
@@ -20,6 +23,7 @@ class Navbar extends React.Component{
         })
     }
     render(){
+        const { pathname } = this.props.location
         return(
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
 
@@ -30,11 +34,11 @@ class Navbar extends React.Component{
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                        <a className="nav-link" href="/book">Book <span className="sr-only">(current)</span></a>
+                        <li className={`nav-item ${pathname=='/book'&&'active'}`}>
+                        <a className="nav-link" href="/book">Book</a>
                         </li>
-                        <li className="nav-item">
-                        <a className="nav-link" href="/profile">Link</a>
+                        <li className={`nav-item ${pathname=='/profile'&&'active'}`}>
+                        <a className="nav-link" href="/profile">Profile</a>
                         </li>
                     </ul>
                     <div className="nav-item">
