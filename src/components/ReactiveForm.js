@@ -10,7 +10,7 @@ const TextInput = ({ handler, touched, hasError, meta }) => (
     <div className="form-group text-left">
                 <label>{meta.label}</label>
                     <div className="d-flex flex-row">
-                        <input placeholder={`Enter ${meta.label}`} className="form-control" {...handler()}/>
+                        <input placeholder={`Enter ${meta.label}`} type={meta.type} className="form-control" {...handler()}/>
                     </div>
                 <small className="form-text text-danger">{touched
         && hasError("required")

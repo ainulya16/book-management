@@ -5,18 +5,18 @@ import { login } from '../modules/auth'
 
 const FORM = {
   username:{
-      type:'string',
-      options:{
+    options:{
+        type:'text',
         required:true,
         label:"Username"
       }
   },
   password:{
-      type:'string',
-      options:{
+    options:{
+        type:'password',
         required:true,
         label:"Password"
-      }
+    }
   },
 }
 class Login extends Component{
