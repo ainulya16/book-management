@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import Form from '../../../components/Form'
+import { login } from '../modules/auth'
 
 // import { confirmAlert } from 'react-confirm-alert'
 
@@ -16,11 +17,11 @@ class Login extends Component{
   constructor(props){
     super(props)
   }
+
   login = () =>{
     let value = this.refs.form.get_value()
     if(value){
-      console.log(value)
-        // this.props.addCompany(value)
+        this.props.login(value)
     }
   }
 
@@ -41,13 +42,11 @@ class Login extends Component{
   }
 }
 const mapDispatchToProps = {
-  // removeOffice,
+  login
 }
 
 const mapStateToProps = (state) => ({
-  ...state
-  // companies : state.companies.data,
-  // offices : state.offices.data
+  ...state.auth
 })
 
 

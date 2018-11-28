@@ -1,19 +1,11 @@
-import { injectReducer } from '../../store/reducers'
 import Book from './routes/Book'
+import Profile from './routes/Profile'
 
 export default (store) => ({
-  /*  Async getComponent is only invoked when route matches   */
-  path: 'dashboard',
-
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
-      const Login = require('./containers').default
-      const reducer = require('./modules/auth').default
-
-      injectReducer(store, { key: 'auth', reducer })
-
-      /*  Return getComponent   */
-      cb(null, Login)
+      const Component = require('./containers').default
+      cb(null, Component)
 
     /* Webpack named bundle   */
     }, 'dashboard')
@@ -21,7 +13,8 @@ export default (store) => ({
   getChildRoutes(partialNextState, cb) {
     require.ensure([], function (require) {
       cb(null, [
-        Book(store)
+        Book(store),
+        Profile(store),
       ])
     })
   },

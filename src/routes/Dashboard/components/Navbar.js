@@ -1,10 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router'
+import { confirmAlert } from 'react-confirm-alert';
+import { connect } from 'react-redux';
+import { logout } from '../../Login/modules/auth'
 
-export default class Navbar extends React.Component{
+class Navbar extends React.Component{
+    logout = () =>{
+        confirmAlert({
+            title: 'Logout Sekarang',
+            message: 'Keluar sekarang?',
+            buttons: [
+                {
+                label: 'Ya',
+                    onClick: () => this.props.logout()
+                },
+                {
+                label: 'Tidak',
+                }
+            ]
+        })
+    }
     render(){
         return(
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
 
                 <a className="navbar-brand" href="#">Mak Gede Book</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,15 +31,24 @@ export default class Navbar extends React.Component{
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                        <a className="nav-link" href="/dashboard/book">Book <span className="sr-only">(current)</span></a>
+                        <a className="nav-link" href="/book">Book <span className="sr-only">(current)</span></a>
                         </li>
                         <li className="nav-item">
                         <a className="nav-link" href="/profile">Link</a>
                         </li>
                     </ul>
+                    <div className="nav-item">
+                        <a className="nav-link btn" onClick={this.logout}>Logout</a>
+                    </div>
                 </div>
 
             </nav>
         )
     }
 } 
+const mapStateToProps = state =>({...state})
+const mapDispatchToProps = {
+    logout,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
