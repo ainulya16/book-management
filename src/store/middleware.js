@@ -3,7 +3,7 @@ import { multiClientMiddleware } from 'redux-axios-middleware';
 import thunk from 'redux-thunk'
 import { environment } from '../utils';
 import FormData from 'form-data';
-
+import { toast } from 'react-toastify';
 const clients = {
     default: {
         client: axios.create({
@@ -40,7 +40,7 @@ const axiosMiddlewareOptions = {
   },
   onError: ({ action, error, next, dispatch }) => {
     // if (error.response.status === 401) {
-    //   return dispatch(AuthActions.logout());
+      // return dispatch(AuthActions.logout());
     // }
     let nextAction = {
       error,
@@ -54,7 +54,10 @@ const axiosMiddlewareOptions = {
       nextAction.type = action.type + '_FAILURE';
     }
     next(nextAction);
-    let message = error.message ? error.message :'Cannot load data'
+    let message = error.response ? error.response.statusText :'Kesalahan jaringan'
+    toast.error(message, {
+      position: toast.POSITION.TOP_CENTER
+    });
     return nextAction;
   }
 }

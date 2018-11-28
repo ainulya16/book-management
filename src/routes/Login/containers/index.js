@@ -15,7 +15,7 @@ const FORM = {
       type:'string',
       options:{
         required:true,
-        label:"Username"
+        label:"Password"
       }
   },
 }
