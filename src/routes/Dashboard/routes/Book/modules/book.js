@@ -1,54 +1,70 @@
+import { api, TOKEN } from '../../../../../utils'
+
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
-export const COUNTER_DOUBLE_ASYNC = 'COUNTER_DOUBLE_ASYNC'
+export const BOOK = 'BOOK'
+export const BOOK_SUCCESS = 'BOOK_SUCCESS'
+export const BOOK_FAILURE = 'BOOK_FAILURE'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function increment (value = 1) {
+export const get_book_list = () => {
   return {
-    type    : COUNTER_INCREMENT,
-    payload : value
+    type    : BOOK,
+    payload: {
+      request: {
+        url: api.books,
+        params:{ token: localStorage.getItem(TOKEN)},
+      },
+      options: {
+        onSuccess:({dispatch,response})=>{
+          const { data } = response;
+          console.log(data)
+          dispatch({type:BOOK_SUCCESS,payload:data.data.books})
+        },
+      }
+    }
   }
 }
 
-/*  This is a thunk, meaning it is a function that immediately
-    returns a function for lazy evaluation. It is incredibly useful for
-    creating async actions, especially when combined with redux-thunk! */
-
-export const doubleAsync = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch({
-          type    : COUNTER_DOUBLE_ASYNC,
-          payload : getState().counter
-        })
-        resolve()
-      }, 200)
-    })
+export const delete_book = (rowKeys) =>{
+  return (dispatch, getState)=>{
+    const { books } = getState().book
+    let payload = books.filter(item=>rowKeys.indexOf(item.id)==-1)
+    dispatch({type:BOOK_SUCCESS,payload})
+  }
+}
+export const create_book = (rowKeys) =>{
+  return (dispatch, getState)=>{
+    const { books } = getState().book
+    // let payload = books.filter(item=>rowKeys.indexOf(item.id)==-1)
+    // dispatch({type:BOOK_SUCCESS,payload})
   }
 }
 
 export const actions = {
-  increment,
-  doubleAsync
+  get_book_list,
+  delete_book
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [COUNTER_INCREMENT]    : (state, action) => state + action.payload,
-  [COUNTER_DOUBLE_ASYNC] : (state, action) => state * 2
+  [BOOK]           : (state, action) => Object.assign({}, state, { loading:true }),
+  [BOOK_SUCCESS]   : (state, action) => Object.assign({}, state, { loading:false, books:action.payload }),
+  [BOOK_FAILURE]   : (state, action) => Object.assign({}, state, { loading:false }),
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = 0
+const initialState = {
+  loading:false,
+  books:[]
+}
 export default function counterReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 

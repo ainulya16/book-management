@@ -1,5 +1,4 @@
 import { api, TOKEN } from '../../../../../utils'
-import { browserHistory} from 'react-router'
 // ------------------------------------
 // Constants
 // ------------------------------------
