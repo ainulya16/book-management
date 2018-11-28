@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import Form from '../../../components/Form'
+import ReactiveFrom from '../../../components/ReactiveForm'
 import { login } from '../modules/auth'
-
-// import { confirmAlert } from 'react-confirm-alert'
 
 const FORM = {
   username:{
-      type:'text',
+      type:'string',
+      options:{
+        required:true,
+        label:"Username"
+      }
   },
   password:{
-      type:'text',
+      type:'string',
+      options:{
+        required:true,
+        label:"Username"
+      }
   },
 }
 class Login extends Component{
@@ -18,20 +24,12 @@ class Login extends Component{
     super(props)
   }
 
-  login = () =>{
-    let value = this.refs.form.get_value()
-    if(value){
-        this.props.login(value)
-    }
-  }
-
   render(){
     return(
       <div className="row h-100 justify-content-center align-items-center">
         <div className="container text-center align-items-center">
           <div className="col-6 offset-3">
-            <Form ref='form' form={FORM}/>
-            <button type="button" className="btn btn-primary" onClick={this.login}>Login</button>
+            <ReactiveFrom ref='form' showSubmitButton submitButtonText="LOGIN" control={FORM} onSubmit={this.props.login}/>
           </div>
         </div>
         
