@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
 import Navbar from '../components/Navbar'
 import { authenticate } from '../../Login/modules/auth'
 

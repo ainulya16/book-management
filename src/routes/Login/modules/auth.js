@@ -6,9 +6,6 @@ import { browserHistory} from 'react-router'
 export const LOGIN = 'LOGIN'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
-export const PROFILE = 'PROFILE'
-export const PROFILE_SUCCESS = 'PROFILE_SUCCESS'
-export const PROFILE_FAILURE = 'PROFILE_FAILURE'
 export const LOGOUT = 'LOGOUT'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
@@ -79,9 +76,6 @@ const ACTION_HANDLERS = {
   [LOGIN]             : (state, action) => Object.assign({}, state, { loading:true }),
   [LOGIN_SUCCESS]     : (state, action) => Object.assign({}, state, { loading:false, token:action.payload }),
   [LOGIN_FAILURE]     : (state, action) => initialState,
-  [PROFILE]           : (state, action) => Object.assign({}, state, { loading:true }),
-  [PROFILE_SUCCESS]   : (state, action) => Object.assign({}, state, { loading:false, user:action.payload }),
-  [PROFILE_FAILURE]   : (state, action) => Object.assign({}, state, { loading:false }),
   [LOGOUT]            : (state, action) => Object.assign({}, state, { loading:true }),
   [LOGOUT_SUCCESS]    : (state, action) => initialState,
   [LOGOUT_FAILURE]    : (state, action) => state,
@@ -91,10 +85,8 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  user:{},
   token:null,
   loading:false,
-  redirectUrl:'/book'
 }
 export default function authReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
